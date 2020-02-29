@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("X")]
     [Tooltip("In ms^-1")] [SerializeField] private float xSpeed = 18.0f;
@@ -16,27 +16,42 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxY = 6.5f;
     [SerializeField] private float minY = -6.5f;
 
-    [Header("Factors")]
+    [Header("Screen Position")]
     [SerializeField] float posPitchFactor = -3.0f;
     [SerializeField] float posYawFactor = 3.5f;
+
+    [Header("Control Throw")]
     [SerializeField] float controlPitchFactor = -20.0f;
     [SerializeField] float controlRollFactor = -20.0f;
+
+    [Header("Death")]
+    public float timeUntilReset = 2f;
 
     private float xThrow = 0.0f;
     private float yThrow = 0.0f;
 
+    private bool isAlive = true;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        
+        AddRequiredComponents();
+    }
+
+    private void AddRequiredComponents()
+    {
+        var rigidBody = gameObject.AddComponent<Rigidbody>();
+        rigidBody.isKinematic = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ProcessLocation();
-        ProcessRotation();
+        if (isAlive)
+        {
+            ProcessLocation();
+            ProcessRotation();
+        }
     }
 
     private void ProcessRotation()
@@ -67,5 +82,17 @@ public class Player : MonoBehaviour
         float newYPos = Mathf.Clamp(rawNewYPos, minY, maxY);
 
         transform.localPosition = new Vector3(newXPos, newYPos, transform.localPosition.z);
+    }
+
+    // Called by CollisionHandler
+    private void StartDeathSequence()
+    {
+        isAlive = false;
+        Invoke(nameof(ResetScene), timeUntilReset);
+    }
+
+    private void ResetScene()
+    {
+        SceneManagement.Instance.LoadScene();
     }
 }

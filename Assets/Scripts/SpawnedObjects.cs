@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicPlayer : SingletonObj<MusicPlayer>
+public class SpawnedObjects : MonoBehaviour
 {
 }

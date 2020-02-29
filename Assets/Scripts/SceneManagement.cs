@@ -7,7 +7,7 @@ public class SceneManagement : Singleton<SceneManagement>
 {
     int currentIndex = 0;
 
-    private void LoadScene()
+    public void LoadScene()
     {
         SceneManager.LoadScene(currentIndex);
     }
