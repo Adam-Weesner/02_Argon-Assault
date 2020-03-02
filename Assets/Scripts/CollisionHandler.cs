@@ -22,6 +22,7 @@ public class CollisionHandler : MonoBehaviour
     {
         if (!isDying)
         {
+            // Change C
             isDying = true;
             Instantiate(particle_explosion, gameObject.transform);
             GetComponent<MeshRenderer>().enabled = false;
