@@ -1408,7 +1408,8 @@ PrefabInstance:
         type: 3}
       propertyPath: particle_explosion
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2722457417472787031, guid: 461bee38c96f0d349b79eb95a081cd6f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af59f292725c78e4b83e17b30407406f, type: 3}
 --- !u!1 &1116601918
@@ -2454,6 +2455,10 @@ PlayableDirector:
   - key: {fileID: 7977615260055137634, guid: f9c5c288fb6537c4bb6d36a7f79cccd2, type: 2}
     value: {fileID: 0}
   - key: {fileID: -3620572481245409790, guid: f9c5c288fb6537c4bb6d36a7f79cccd2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2031499476977128324, guid: f9c5c288fb6537c4bb6d36a7f79cccd2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5732782114319182524, guid: f9c5c288fb6537c4bb6d36a7f79cccd2, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:

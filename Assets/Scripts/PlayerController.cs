@@ -62,12 +62,17 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessFiring()
     {
-        if (!CrossPlatformInputManager.GetButton("Fire1"))
+        if (CrossPlatformInputManager.GetButton("Fire1"))
         {
-            foreach (GameObject gun in guns)
+            /*foreach (GameObject gun in guns)
             {
                 gun.GetComponent<ParticleSystem>().Play();
-            }
+            }*/
+            SetGunsActive(true);
+        }
+        else
+        {
+            SetGunsActive(false);
         }
     }
 
@@ -108,10 +113,7 @@ public class PlayerController : MonoBehaviour
         {
             isAlive = false;
 
-            foreach (GameObject gun in guns)
-            {
-                gun.GetComponent<ParticleSystem>().Stop();
-            }
+            SetGunsActive(false);
 
             Instantiate(particle_explosion, gameObject.transform);
 
@@ -119,6 +121,15 @@ public class PlayerController : MonoBehaviour
         } else
         {
             // TODO consider hit FX
+        }
+    }
+
+    private void SetGunsActive(bool isActive)
+    {
+        foreach (GameObject gun in guns)
+        {
+            var emission = gun.GetComponent<ParticleSystem>().emission;
+            emission.enabled = isActive;
         }
     }
 
