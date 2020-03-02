@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(CollisionHandler))]
 public class PlayerController : MonoBehaviour
 {
     [Header("X")]
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float xThrow = 0.0f;
     private float yThrow = 0.0f;
 
-    private bool isAlive = true;
+    [HideInInspector] public bool isAlive = true;
 
 
     private void Awake()
@@ -87,8 +88,11 @@ public class PlayerController : MonoBehaviour
     // Called by CollisionHandler
     private void StartDeathSequence()
     {
-        isAlive = false;
-        Invoke(nameof(ResetScene), timeUntilReset);
+        if (isAlive)
+        {
+            isAlive = false;
+            Invoke(nameof(ResetScene), timeUntilReset);
+        }
     }
 
     private void ResetScene()
