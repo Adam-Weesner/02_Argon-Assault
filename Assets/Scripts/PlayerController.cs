@@ -7,6 +7,10 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(CollisionHandler))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("General")]
+    [SerializeField] private GameObject[] guns;
+    [SerializeField] private ParticleSystem particle_explosion;
+
     [Header("X")]
     [Tooltip("In ms^-1")] [SerializeField] private float xSpeed = 18.0f;
     [SerializeField] private float maxX = 11.5f;
@@ -52,6 +56,18 @@ public class PlayerController : MonoBehaviour
         {
             ProcessLocation();
             ProcessRotation();
+            ProcessFiring();
+        }
+    }
+
+    private void ProcessFiring()
+    {
+        if (!CrossPlatformInputManager.GetButton("Fire1"))
+        {
+            foreach (GameObject gun in guns)
+            {
+                gun.GetComponent<ParticleSystem>().Play();
+            }
         }
     }
 
@@ -91,7 +107,18 @@ public class PlayerController : MonoBehaviour
         if (isAlive)
         {
             isAlive = false;
+
+            foreach (GameObject gun in guns)
+            {
+                gun.GetComponent<ParticleSystem>().Stop();
+            }
+
+            Instantiate(particle_explosion, gameObject.transform);
+
             Invoke(nameof(ResetScene), timeUntilReset);
+        } else
+        {
+            // TODO consider hit FX
         }
     }
 
